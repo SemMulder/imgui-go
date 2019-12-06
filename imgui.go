@@ -1129,3 +1129,30 @@ func MouseCursor() int {
 func SetMouseCursor(cursor int) {
 	C.iggSetMouseCursor(C.int(cursor))
 }
+
+// CalcTextSize calls CalcTextSizeV(text, nil, false, -1.0).
+func CalcTextSize(text string) Vec2 {
+	return CalcTextSizeV(text, nil, false, -1.0)
+}
+
+// CalcTextSizeV computes the size of the given text in the current Font.
+func CalcTextSizeV(text string, textEnd *string, hideTextAfterDoubleHash bool, wrapWidth float32) Vec2 {
+	textArg, textFin := wrapString(text)
+	defer textFin()
+
+	var textEndArg *C.char
+	if textEnd == nil {
+		textEndArg = nil
+	} else {
+		var textEndFin func()
+		textEndArg, textEndFin = wrapString(*textEnd)
+		defer textEndFin()
+	}
+
+	var value Vec2
+	valueArg, valueFin := value.wrapped()
+	C.iggCalcTextSize(textArg, textEndArg, castBool(hideTextAfterDoubleHash), C.float(wrapWidth), valueArg)
+	valueFin()
+
+	return value
+}

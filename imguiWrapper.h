@@ -167,6 +167,8 @@ extern IggBool iggBeginTabItem(char const *label, IggBool *p_open, int flags);
 extern void iggEndTabItem();
 extern void iggSetTabItemClosed(char const * tab_or_docked_window_label);
 
+extern void iggCalcTextSize(const char* text, const char* text_end, IggBool hide_text_after_double_hash, float wrap_width, IggVec2 *size);
+
 #ifdef __cplusplus
 }
 #endif

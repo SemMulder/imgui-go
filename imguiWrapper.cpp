@@ -662,3 +662,7 @@ void iggEndTabItem() {
 void iggSetTabItemClosed(char const * tab_or_docked_window_label) {
     ImGui::SetTabItemClosed(tab_or_docked_window_label);
 }
+
+void iggCalcTextSize(const char* text, const char* text_end, IggBool hide_text_after_double_hash, float wrap_width, IggVec2 *size) {
+    exportValue(*size, ImGui::CalcTextSize(text, text_end, hide_text_after_double_hash, wrap_width));
+}
